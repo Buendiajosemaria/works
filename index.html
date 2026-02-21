@@ -90,37 +90,24 @@
 
     /* ─── HERO ───────────────────────────────────── */
     #hero {
-      min-height: 100svh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr auto;
-      border-bottom: 1px solid var(--line);
+      height: 80svh;
       position: relative;
       overflow: hidden;
+      border-bottom: none;
     }
 
-    /* Left column: text content */
-    .hero-left {
-      grid-column: 1;
-      grid-row: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: var(--gap);
-      padding-top: 6rem;
-      padding-bottom: calc(var(--gap) * 2);
-      position: relative;
-      z-index: 2;
+    /* Title strip below video */
+    .hero-title-strip {
       background: var(--bg);
+      padding: 2rem var(--gap) 1.5rem;
+      border-bottom: 1px solid var(--line);
     }
 
-    /* Right column: video fills this cell */
+    .hero-left {
+      display: none;
+    }
     .hero-right {
-      grid-column: 2;
-      grid-row: 1 / -1;
-      position: relative;
-      overflow: hidden;
-      min-height: 100svh;
+      display: none;
     }
 
     /* ─── HERO REEL ──────────────────────────────── */
@@ -129,17 +116,6 @@
       inset: 0;
       z-index: 0;
       overflow: hidden;
-    }
-    .hero-reel::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to left,
-        rgba(240,237,230,0) 60%,
-        rgba(240,237,230,.4) 100%
-      );
-      z-index: 1;
     }
     .hero-reel video {
       width: 100%; height: 100%;
@@ -174,25 +150,17 @@
     }
     #hero .hero-eyebrow,
     #hero .hero-title,
-    #hero .hero-meta,
     #hero .scroll-hint {
       position: relative;
       z-index: 2;
     }
 
-    /* Frosted glass card wrapping all hero text */
-    .hero-content {
+    .hero-left {
       position: relative;
       z-index: 2;
-      display: inline-flex;
+      display: flex;
       flex-direction: column;
-      background: rgba(240, 237, 230, 0.55);
-      backdrop-filter: blur(18px) saturate(1.4);
-      -webkit-backdrop-filter: blur(18px) saturate(1.4);
-      border: 1px solid rgba(240, 237, 230, 0.6);
-      border-radius: 4px;
-      padding: 2.5rem 3rem 2.5rem 2.5rem;
-      max-width: 680px;
+      max-width: 55%;
     }
 
     .hero-eyebrow {
@@ -209,11 +177,11 @@
 
     .hero-title {
       font-family: var(--sans);
-      font-size: clamp(3.5rem, 9vw, 8.5rem);
+      font-size: clamp(2.5rem, 7vw, 7rem);
       font-weight: 900;
       line-height: 1;
       letter-spacing: -.02em;
-      max-width: 12ch;
+      white-space: nowrap;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 1s var(--ease) .4s forwards;
@@ -221,11 +189,9 @@
 
     .hero-title .line-accent {
       color: var(--accent1);
-      display: block;
     }
     .hero-title .line-blue {
       color: var(--ink);
-      display: block;
     }
 
     /* Meta strip between hero and work */
@@ -662,59 +628,43 @@
 
 <section id="hero">
 
-  <!-- Left: text -->
-  <div class="hero-left">
-    <p class="hero-eyebrow">3D Design &amp; Visual Development</p>
-    <h1 class="hero-title">
-      Intention
-      <span class="line-accent">creates</span>
-      <span class="line-blue">presence.</span>
-    </h1>
-    <span class="scroll-hint">Scroll</span>
-  </div>
+  <!-- Full-bleed background reel -->
+  <div class="hero-reel" id="heroReel">
 
-  <!-- Right: video reel -->
-  <div class="hero-right">
-    <!--
-    ═══════════════════════════════════════════════════════
-    HERO REEL — choose ONE option below and delete the others
-    ═══════════════════════════════════════════════════════
-    OPTION A — LOCAL VIDEO: replace "your-reel.mp4"
-    OPTION B — YOUTUBE: replace both VIDEO_ID instances
-    OPTION C — VIMEO: replace VIDEO_ID
-    Delete the placeholder div when adding a real video.
-    ═══════════════════════════════════════════════════════
+    <!-- ── OPTION A: LOCAL VIDEO ──
+    <video autoplay muted loop playsinline>
+      <source src="your-reel.mp4" type="video/mp4">
+    </video>
     -->
-    <div class="hero-reel" id="heroReel">
 
-      <!-- ── PLACEHOLDER ── -->
-      <!-- <div class="hero-reel-placeholder"><span>✦</span></div> -->
+    <!-- ── OPTION B: YOUTUBE (active) ── -->
+    <iframe
+      src="https://www.youtube.com/embed/KkAI6kBD7p8?autoplay=1&mute=1&loop=1&playlist=KkAI6kBD7p8&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+      allow="autoplay; fullscreen"
+      title="Hero reel">
+    </iframe>
 
-      <!-- ── OPTION A: LOCAL VIDEO ──
-      <video autoplay muted loop playsinline>
-        <source src="your-reel.mp4" type="video/mp4">
-      </video>
-      -->
+    <!-- ── OPTION C: VIMEO ──
+    <iframe
+      src="https://player.vimeo.com/video/VIDEO_ID?autoplay=1&muted=1&loop=1&background=1&transparent=0"
+      allow="autoplay; fullscreen"
+      title="Hero reel">
+    </iframe>
+    -->
 
-      <!-- ── OPTION B: YOUTUBE ── -->
-      <iframe
-        src="https://www.youtube.com/embed/KkAI6kBD7p8?autoplay=1&mute=1&loop=1&playlist=KkAI6kBD7p8&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
-        allow="autoplay; fullscreen"
-        title="Hero reel">
-      </iframe>
-
-      <!-- ── OPTION C: VIMEO ──
-      <iframe
-        src="https://player.vimeo.com/video/VIDEO_ID?autoplay=1&muted=1&loop=1&background=1&transparent=0"
-        allow="autoplay; fullscreen"
-        title="Hero reel">
-      </iframe>
-      -->
-
-    </div>
   </div>
 
 </section>
+
+</section>
+
+<!-- Title strip — clean, no video behind it -->
+<div class="hero-title-strip">
+  <p class="hero-eyebrow">3D Design &amp; Visual Development</p>
+  <h1 class="hero-title">
+    Intention <span class="line-accent">creates</span> <span class="line-blue">presence.</span>
+  </h1>
+</div>
 
 <!-- Meta strip sits between hero and work -->
 <div class="hero-meta-strip">
