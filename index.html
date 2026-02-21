@@ -101,21 +101,62 @@
       overflow: hidden;
     }
 
-    /* big decorative number */
-    #hero::before {
-      content: '3D';
+    /* ─── HERO REEL ──────────────────────────────── */
+    .hero-reel {
       position: absolute;
-      top: 50%; right: -2rem;
-      transform: translateY(-50%);
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hero-reel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(240,237,230,.55) 0%,
+        rgba(240,237,230,.25) 40%,
+        rgba(240,237,230,.75) 100%
+      );
+      z-index: 1;
+    }
+    .hero-reel video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-reel iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 177.78vh;
+      height: 56.25vw;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      border: none;
+      pointer-events: none;
+    }
+    .hero-reel-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1a1512 0%, #2e1a0e 50%, rgba(232,82,26,.13) 100%);
+    }
+    .hero-reel-placeholder span {
       font-family: var(--sans);
-      font-weight: 800;
+      font-weight: 900;
       font-size: clamp(18rem, 35vw, 32rem);
       color: transparent;
-      -webkit-text-stroke: 1.5px rgba(232,82,26,.15);
-      pointer-events: none;
+      -webkit-text-stroke: 1.5px rgba(232,82,26,.18);
       letter-spacing: -.04em;
       line-height: 1;
       user-select: none;
+    }
+    #hero .hero-eyebrow,
+    #hero .hero-title,
+    #hero .hero-meta,
+    #hero .scroll-hint {
+      position: relative;
+      z-index: 2;
     }
 
     .hero-eyebrow {
@@ -576,6 +617,55 @@
 </nav>
 
 <section id="hero">
+
+  <!--
+  ═══════════════════════════════════════════════════════
+  HERO REEL — choose ONE option below and delete the others
+  ═══════════════════════════════════════════════════════
+
+  OPTION A — LOCAL VIDEO (recommended for best quality/control)
+  Replace "your-reel.mp4" with the path to your video file.
+
+  OPTION B — YOUTUBE background loop
+  Replace VIDEO_ID with your 11-character YouTube video ID.
+  e.g. youtube.com/watch?v=dQw4w9WgXcQ → VIDEO_ID = dQw4w9WgXcQ
+
+  OPTION C — VIMEO background loop
+  Replace VIDEO_ID with the numeric Vimeo video ID.
+  e.g. vimeo.com/123456789 → VIDEO_ID = 123456789
+
+  Currently showing: PLACEHOLDER (dark gradient).
+  Delete the placeholder div and uncomment your chosen option.
+  ═══════════════════════════════════════════════════════
+  -->
+  <div class="hero-reel" id="heroReel">
+
+    <!-- ── PLACEHOLDER (delete this block when you add a real video) ── -->
+    <div class="hero-reel-placeholder"><span>✦</span></div>
+
+    <!-- ── OPTION A: LOCAL VIDEO — uncomment & edit src ──
+    <video autoplay muted loop playsinline>
+      <source src="your-reel.mp4" type="video/mp4">
+    </video>
+    -->
+
+    <!-- ── OPTION B: YOUTUBE — uncomment & replace VIDEO_ID ──
+    <iframe
+      src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+      allow="autoplay; fullscreen"
+      title="Hero reel">
+    </iframe>
+    -->
+
+    <!-- ── OPTION C: VIMEO — uncomment & replace VIDEO_ID ──
+    <iframe
+      src="https://player.vimeo.com/video/VIDEO_ID?autoplay=1&muted=1&loop=1&background=1&transparent=0"
+      allow="autoplay; fullscreen"
+      title="Hero reel">
+    </iframe>
+    -->
+
+  </div>
   <p class="hero-eyebrow">3D Design &amp; Visual Development</p>
   <h1 class="hero-title">
     Intention
