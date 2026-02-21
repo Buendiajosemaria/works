@@ -159,6 +159,21 @@
       z-index: 2;
     }
 
+    /* Frosted glass card wrapping all hero text */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      flex-direction: column;
+      background: rgba(240, 237, 230, 0.55);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(240, 237, 230, 0.6);
+      border-radius: 4px;
+      padding: 2.5rem 3rem 2.5rem 2.5rem;
+      max-width: 680px;
+    }
+
     .hero-eyebrow {
       font-size: .7rem;
       letter-spacing: .2em;
@@ -192,9 +207,14 @@
       display: block;
     }
 
+    /* Meta strip between hero and work */
+    .hero-meta-strip {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 1.5rem var(--gap);
+    }
     .hero-meta {
-      margin-top: 3.5rem;
-      display: flex; gap: 3rem; flex-wrap: wrap;
+      display: inline-flex; gap: 3rem; flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp .8s var(--ease) .8s forwards;
     }
@@ -649,9 +669,9 @@
     </video>
     -->
 
-    <-- ── OPTION B: YOUTUBE — uncomment & replace VIDEO_ID ──
+    <!-- ── OPTION B: YOUTUBE — uncomment & replace VIDEO_ID ──
     <iframe
-      src="https://www.youtube.com/embed/KkAI6kBD7p8?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+      src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
       allow="autoplay; fullscreen"
       title="Hero reel">
     </iframe>
@@ -672,6 +692,11 @@
     <span class="line-accent">creates</span>
     <span class="line-blue">presence.</span>
   </h1>
+  <span class="scroll-hint">Scroll</span>
+</section>
+
+<!-- Meta strip sits between hero and work -->
+<div class="hero-meta-strip">
   <div class="hero-meta">
     <div class="hero-meta-item">
       <span class="hero-meta-label">Specialties</span>
@@ -686,8 +711,7 @@
       <span class="hero-meta-value">Contract work &amp; Collaborations</span>
     </div>
   </div>
-  <span class="scroll-hint">Scroll</span>
-</section>
+</div>
 
 <section id="work">
   <div class="section-header reveal">
@@ -839,7 +863,7 @@
       <p class="section-label reveal">Get in touch</p>
       <h2 class="contact-cta reveal">Let's make something <em>remarkable.</em></h2>
     </div>
-    <form action="https://formspree.io/f//xgolnool" method="POST" class="reveal">
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="reveal">
       <div class="field">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required placeholder="Your name">
@@ -961,6 +985,26 @@
     hideAllMedia();
     lightbox.classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  /* ── YouTube loop fix via IFrame API ── */
+  function onYouTubeIframeAPIReady() {
+    const iframe = document.querySelector('.hero-reel iframe[src*="youtube"]');
+    if (!iframe) return;
+    const videoId = new URL(iframe.src).searchParams.get('playlist');
+    if (!videoId) return;
+    new YT.Player(iframe, {
+      events: {
+        onStateChange: e => {
+          if (e.data === YT.PlayerState.ENDED) e.target.seekTo(0);
+        }
+      }
+    });
+  }
+  if (document.querySelector('.hero-reel iframe[src*="youtube"]')) {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
   }
 </script>
 </body>
