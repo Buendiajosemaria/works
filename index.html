@@ -15,8 +15,6 @@
       --ink:      #141210;
       --muted:    #7a7570;
       --accent1:  #e8521a;
-      --accent2:  #e8521a;
-      --accent3:  #e8521a;
       --line:     rgba(20,18,16,.1);
       --sans:     'Barlow', sans-serif;
       --mono:     'DM Mono', monospace;
@@ -61,7 +59,6 @@
       background: rgba(240,237,230,.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
-      overflow: visible;
     }
 
     .nav-logo {
@@ -88,93 +85,27 @@
     }
     .nav-links a:hover { color: var(--accent1); }
 
-    /* ─── HERO ───────────────────────────────────── */
+    /* ─── HERO — SPLIT LAYOUT ─────────────────────── */
     #hero {
+      display: grid;
+      grid-template-columns: 1fr 60%;
+      /* Height = 16:9 of the 60% column + nav offset + video margins (1.25rem top + bottom) */
+      height: calc(60vw * (9/16) + 4.5rem);
+      padding-top: 4.5rem;
       position: relative;
       overflow: hidden;
-      border-bottom: none;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-    }
-
-    /* Title strip below video */
-    .hero-title-strip {
-      background: var(--bg);
-      padding: 2rem var(--gap) 1.5rem;
       border-bottom: 1px solid var(--line);
     }
 
+    /* LEFT — text */
     .hero-left {
-      display: none;
-    }
-    .hero-right {
-      display: none;
-    }
-
-    /* ─── HERO REEL ──────────────────────────────── */
-    .hero-reel {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .hero-reel video {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-reel iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      pointer-events: none;
-    }
-    .hero-reel video {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-reel iframe {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 177.78vh;
-      height: 56.25vw;
-      min-width: 100%;
-      min-height: 100%;
-      transform: translate(-50%, -50%);
-      border: none;
-      pointer-events: none;
-    }
-    .hero-reel-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, #1a1512 0%, #2e1a0e 50%, rgba(232,82,26,.13) 100%);
-    }
-    .hero-reel-placeholder span {
-      font-family: var(--sans);
-      font-weight: 900;
-      font-size: clamp(18rem, 35vw, 32rem);
-      color: transparent;
-      -webkit-text-stroke: 1.5px rgba(232,82,26,.18);
-      letter-spacing: -.04em;
-      line-height: 1;
-      user-select: none;
-    }
-    #hero .hero-eyebrow,
-    #hero .hero-title,
-    #hero .scroll-hint {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 2;
       display: flex;
       flex-direction: column;
-      max-width: 55%;
+      justify-content: center;
+      padding: 2rem 2rem 2rem calc(var(--gap) + 1.5rem);
+      z-index: 2;
+      /* Don't let left column drive the row height */
+      overflow: hidden;
     }
 
     .hero-eyebrow {
@@ -183,7 +114,7 @@
       text-transform: uppercase;
       color: var(--accent1);
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
       opacity: 0;
       transform: translateY(10px);
       animation: fadeUp .7s var(--ease) .2s forwards;
@@ -191,24 +122,128 @@
 
     .hero-title {
       font-family: var(--sans);
-      font-size: clamp(2.5rem, 7vw, 7rem);
+      font-size: clamp(2.8rem, 5.5vw, 5.5rem);
       font-weight: 900;
       line-height: 1;
-      letter-spacing: -.02em;
-      white-space: nowrap;
+      letter-spacing: -.03em;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 1s var(--ease) .4s forwards;
     }
+    .hero-title .line-accent { color: var(--accent1); }
 
-    .hero-title .line-accent {
-      color: var(--accent1);
-    }
-    .hero-title .line-blue {
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-top: 2.5rem;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
       color: var(--ink);
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp .8s var(--ease) .9s forwards;
+      transition: color .25s;
+    }
+    .hero-cta::after {
+      content: '→';
+      font-size: 1rem;
+      transition: transform .3s var(--ease);
+    }
+    .hero-cta:hover { color: var(--accent1); }
+    .hero-cta:hover::after { transform: translateX(5px); }
+
+    /* ─── SCROLL HINT — vertical, left of tagline ── */
+    .scroll-hint {
+      position: absolute;
+      /* align with left edge of hero-left content area */
+      left: calc(var(--gap) - 1.6rem);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      opacity: 0;
+      animation: fadeUp .8s var(--ease) 1.2s forwards;
+      z-index: 3;
+    }
+    .scroll-hint span {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--accent1), transparent);
+      animation: scrollPulse 2s ease-in-out 1.5s infinite;
+    }
+    @keyframes scrollPulse {
+      0%   { transform: scaleY(1); opacity: 1; }
+      50%  { transform: scaleY(.5); opacity: .4; }
+      100% { transform: scaleY(1); opacity: 1; }
     }
 
-    /* Meta strip between hero and work */
+    /* RIGHT — video window */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      margin: 1.25rem 1.25rem 1.25rem 0;
+      border-radius: 4px;
+      box-shadow: 0 40px 100px -20px rgba(20,18,16,.25);
+      opacity: 0;
+      animation: fadeIn 1.2s var(--ease) .5s forwards;
+      /* Fill the row — height is already set by the grid */
+      align-self: stretch;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .hero-right iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      /* Oversize slightly to avoid letterboxing */
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
+      transform: translate(-50%, -50%);
+      border: none;
+      pointer-events: none;
+    }
+
+    /* subtle dark vignette on video edges */
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(240,237,230,.15) 0%,
+        transparent 30%,
+        transparent 70%,
+        rgba(20,18,16,.18) 100%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* thin accent border on right panel */
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(232,82,26,.2);
+      border-radius: 4px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ─── META STRIP ──────────────────────────────── */
     .hero-meta-strip {
       background: var(--surface);
       border-bottom: 1px solid var(--line);
@@ -219,10 +254,7 @@
       opacity: 0;
       animation: fadeUp .8s var(--ease) .8s forwards;
     }
-
-    .hero-meta-item {
-      display: flex; flex-direction: column; gap: .25rem;
-    }
+    .hero-meta-item { display: flex; flex-direction: column; gap: .25rem; }
     .hero-meta-label {
       font-size: .6rem;
       letter-spacing: .15em;
@@ -230,24 +262,7 @@
       color: var(--muted);
       font-weight: 500;
     }
-    .hero-meta-value {
-      font-size: .85rem;
-      color: var(--ink);
-      font-weight: 600;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: var(--gap); right: var(--gap);
-      font-size: .6rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      writing-mode: vertical-rl;
-      opacity: 0;
-      animation: fadeUp .8s var(--ease) 1.1s forwards;
-      z-index: 3;
-    }
+    .hero-meta-value { font-size: .85rem; color: var(--ink); font-weight: 600; }
 
     /* ─── SECTION WRAPPER ─────────────────────────── */
     section {
@@ -302,59 +317,61 @@
       border-color: var(--accent1);
     }
 
-    /* ─── PROJECT GRID ────────────────────────────── */
+    /* ─── PROJECT GRID — EXPANDING CARDS ─────────── */
     .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+      display: flex;
       gap: 3px;
-    }
-
-    /* First card spans 2 columns for visual impact */
-    .project-card:first-child {
-      grid-column: span 2;
+      height: 520px;
+      align-items: stretch;
     }
 
     .project-card {
       position: relative;
       overflow: hidden;
       background: var(--surface);
-      aspect-ratio: 16/10;
       cursor: pointer;
+      border-radius: 2px;
+
+      /* flex: each card starts equally — expand on hover */
+      flex: 1;
+      min-width: 60px;
+      transition: flex .6s var(--ease), filter .4s;
+      filter: saturate(.7) brightness(.9);
     }
 
-    .project-card:first-child {
-      aspect-ratio: 16/7;
+    .project-card:hover {
+      flex: 4.5;
+      filter: saturate(1.05) brightness(1);
     }
+
+    /* first card slightly wider by default */
+    .project-card:first-child { flex: 1.6; }
 
     .project-card .thumb {
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform .9s var(--ease), filter .4s;
-      filter: saturate(.8);
+      transition: transform .9s var(--ease);
     }
+
+    .project-card:hover .thumb { transform: scale(1.04); }
 
     .project-card .placeholder {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
       font-family: var(--sans);
-      font-size: clamp(4rem, 10vw, 8rem);
+      font-size: clamp(2rem, 5vw, 5rem);
       font-weight: 800;
       letter-spacing: -.04em;
-      color: rgba(255,255,255,.18);
+      color: rgba(255,255,255,.12);
     }
 
-    .project-card:nth-child(1) .placeholder { background: linear-gradient(135deg, #e8521a 0%, #c03d0e 100%); }
-    .project-card:nth-child(2) .placeholder { background: linear-gradient(135deg, #2a2522 0%, #1a1512 100%); }
-    .project-card:nth-child(3) .placeholder { background: linear-gradient(135deg, #e8521a 0%, #7a2a0a 100%); }
-    .project-card:nth-child(4) .placeholder { background: linear-gradient(135deg, #1a1512 0%, #0d0b09 100%); }
-    .project-card:nth-child(5) .placeholder { background: linear-gradient(135deg, #c03d0e 0%, #3a1a0a 100%); }
-    .project-card:nth-child(6) .placeholder { background: linear-gradient(135deg, #2a2522 0%, #e8521a 100%); }
-
-    .project-card:hover .thumb { transform: scale(1.05); filter: saturate(1.1); }
-
-    .project-card video.thumb { filter: saturate(.8); }
-    .project-card:hover video.thumb { transform: scale(1.05); filter: saturate(1.1); }
+    .project-card:nth-child(1) .placeholder { background: linear-gradient(160deg, #e8521a 0%, #c03d0e 100%); }
+    .project-card:nth-child(2) .placeholder { background: linear-gradient(160deg, #2a2522 0%, #1a1512 100%); }
+    .project-card:nth-child(3) .placeholder { background: linear-gradient(160deg, #e8521a 0%, #7a2a0a 100%); }
+    .project-card:nth-child(4) .placeholder { background: linear-gradient(160deg, #1a1512 0%, #0d0b09 100%); }
+    .project-card:nth-child(5) .placeholder { background: linear-gradient(160deg, #c03d0e 0%, #3a1a0a 100%); }
+    .project-card:nth-child(6) .placeholder { background: linear-gradient(160deg, #2a2522 0%, #e8521a 100%); }
 
     .media-badge {
       position: absolute;
@@ -370,43 +387,76 @@
       backdrop-filter: blur(6px);
       pointer-events: none;
       z-index: 2;
+      opacity: 0;
+      transition: opacity .3s var(--ease);
     }
+    .project-card:hover .media-badge { opacity: 1; }
 
     .project-overlay {
       position: absolute; inset: 0;
-      background: rgba(20,18,16,0);
-      transition: background .35s var(--ease);
+      background: linear-gradient(to top, rgba(20,18,16,.82) 0%, transparent 55%);
       display: flex; flex-direction: column;
       justify-content: flex-end;
-      padding: 2rem;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity .4s var(--ease);
     }
-    .project-card:hover .project-overlay { background: rgba(20,18,16,.6); }
+    .project-card:hover .project-overlay { opacity: 1; }
 
     .project-info {
-      transform: translateY(14px);
-      opacity: 0;
-      transition: all .35s var(--ease);
+      transform: translateY(10px);
+      transition: transform .4s var(--ease);
     }
-    .project-card:hover .project-info { transform: translateY(0); opacity: 1; }
+    .project-card:hover .project-info { transform: translateY(0); }
+
+    .project-number {
+      font-family: var(--mono);
+      font-size: .6rem;
+      color: var(--accent1);
+      letter-spacing: .12em;
+      margin-bottom: .35rem;
+    }
 
     .project-title {
       font-family: var(--sans);
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #fff;
       line-height: 1.15;
       letter-spacing: -.02em;
+      /* Clamp so title doesn't wrap on narrow cards */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .project-tag {
-      font-size: .62rem;
+      font-size: .6rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       font-weight: 600;
-      color: rgba(255,255,255,.55);
-      margin-top: .3rem;
+      color: rgba(255,255,255,.5);
+      margin-top: .25rem;
     }
 
-    /* Colored accent line on hover */
+    /* vertical label visible on non-expanded cards */
+    .card-label-vertical {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      font-size: .58rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255,255,255,.3);
+      white-space: nowrap;
+      transition: opacity .35s var(--ease);
+      pointer-events: none;
+    }
+    .project-card:hover .card-label-vertical { opacity: 0; }
+
+    /* accent line at bottom */
     .project-card::after {
       content: '';
       position: absolute;
@@ -415,7 +465,7 @@
       background: var(--accent1);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform .4s var(--ease);
+      transition: transform .5s var(--ease);
     }
     .project-card:hover::after { transform: scaleX(1); }
 
@@ -483,13 +533,9 @@
       line-height: 1;
       letter-spacing: -.01em;
     }
-    .contact-cta em {
-      font-style: normal;
-      color: var(--accent1);
-    }
+    .contact-cta em { font-style: normal; color: var(--accent1); }
 
     form { display: flex; flex-direction: column; gap: 1rem; }
-
     .field { display: flex; flex-direction: column; gap: .4rem; }
     label {
       font-size: .6rem;
@@ -561,16 +607,13 @@
       backdrop-filter: blur(10px);
     }
     .lightbox.open { display: flex; }
-
-    .lightbox img,
-    .lightbox video {
+    .lightbox img, .lightbox video {
       max-width: min(90vw, 1000px);
       max-height: 72vh;
       object-fit: contain;
       display: block;
     }
     .lightbox video { background: #000; outline: none; }
-
     .lightbox-embed {
       display: none;
       width: min(90vw, 960px);
@@ -578,7 +621,6 @@
       border: none;
       background: #000;
     }
-
     .lightbox-info {
       text-align: center;
       color: rgba(255,255,255,.5);
@@ -603,7 +645,6 @@
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
-
     .reveal {
       opacity: 0; transform: translateY(20px);
       transition: opacity .7s var(--ease), transform .7s var(--ease);
@@ -611,19 +652,25 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ─── RESPONSIVE ──────────────────────────────── */
-    @media (max-width: 640px) {
-      .project-card:first-child { grid-column: span 1; aspect-ratio: 16/10; }
+    @media (max-width: 900px) {
+      #hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 50svh;
+      }
+      .hero-right { margin: 0; border-radius: 0; }
+      .project-grid {
+        flex-direction: column;
+        height: auto;
+      }
+      .project-card { flex: none !important; height: 240px; }
+      .card-label-vertical { display: none; }
       #about .about-grid,
       .contact-inner { grid-template-columns: 1fr; }
-      .nav-links { gap: 1rem; }
-      #hero { grid-template-columns: 1fr; }
-      .hero-right { min-height: 50svh; }
-      .hero-left { padding-bottom: var(--gap); }
     }
 
-    @media (max-width: 900px) {
-      .project-grid { grid-template-columns: 1fr; }
-      .project-card:first-child { grid-column: span 1; aspect-ratio: 16/9; }
+    @media (max-width: 640px) {
+      .nav-links { gap: 1rem; }
+      .project-card { height: 180px; }
     }
   </style>
 </head>
@@ -640,45 +687,36 @@
   </ul>
 </nav>
 
+<!-- ─── HERO ──────────────────────────────────────── -->
 <section id="hero">
 
-  <!-- Full-bleed background reel -->
-  <div class="hero-reel" id="heroReel">
+  <!-- LEFT: text content -->
+  <div class="hero-left">
+    <p class="hero-eyebrow">3D Design &amp; Visual Development</p>
+    <h1 class="hero-title">
+      Intention<br>
+      <span class="line-accent">creates</span><br>
+      presence.
+    </h1>
+    <a href="#work" class="hero-cta">View selected work</a>
+  </div>
 
-    <!-- ── OPTION A: LOCAL VIDEO ──
-    <video autoplay muted loop playsinline>
-      <source src="your-reel.mp4" type="video/mp4">
-    </video>
-    -->
+  <!-- scroll indicator — absolute to #hero -->
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
 
-    <!-- ── OPTION B: YOUTUBE (active) ── -->
+  <!-- RIGHT: video window -->
+  <div class="hero-right">
     <iframe
       src="https://www.youtube.com/embed/KkAI6kBD7p8?autoplay=1&mute=1&loop=1&playlist=KkAI6kBD7p8&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
       allow="autoplay; fullscreen"
       title="Hero reel">
     </iframe>
-
-    <!-- ── OPTION C: VIMEO ──
-    <iframe
-      src="https://player.vimeo.com/video/VIDEO_ID?autoplay=1&muted=1&loop=1&background=1&transparent=0"
-      allow="autoplay; fullscreen"
-      title="Hero reel">
-    </iframe>
-    -->
-
   </div>
 
 </section>
-
-</section>
-
-<!-- Title strip — clean, no video behind it -->
-<div class="hero-title-strip">
-  <p class="hero-eyebrow">3D Design &amp; Visual Development</p>
-  <h1 class="hero-title">
-    Intention <span class="line-accent">creates</span> <span class="line-blue">presence.</span>
-  </h1>
-</div>
 
 <!-- Meta strip sits between hero and work -->
 <div class="hero-meta-strip">
@@ -698,6 +736,7 @@
   </div>
 </div>
 
+<!-- ─── WORK ───────────────────────────────────────── -->
 <section id="work">
   <div class="section-header reveal">
     <div>
@@ -714,16 +753,22 @@
     <button class="filter-btn" data-filter="architecture">Architecture</button>
   </div>
 
-  <div class="project-grid" id="projectGrid">
+  <div class="project-grid reveal" id="projectGrid">
 
-    <div class="project-card" data-category="motion" data-type="vimeo"
-         data-id="76979871"
-         data-title="Kinetic Flow" data-tag="Motion &amp; VFX">
-      <div class="placeholder">01</div>
-      <span class="media-badge">▶ Vimeo</span>
+    <div class="project-card" data-category="motion" data-type="youtube"
+         data-id="76979871" data-title="Aston Martin" data-tag="Motion &amp; VFX">
+      <iframe
+  src="https://www.youtube.com/embed/fK0vw98epA?autoplay=1&mute=1&loop=1&playlist=fK0vw98epA&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+  style="position:absolute;inset:0;width:100%;height:100%;border:none;pointer-events:none;"
+  allow="autoplay; fullscreen"
+  title="Aston Martin">
+</iframe>
+      <span class="media-badge">▶ YouTube</span>
+      <span class="card-label-vertical">Aston Martin</span>
       <div class="project-overlay">
         <div class="project-info">
-          <p class="project-title">Kinetic Flow</p>
+          <p class="project-number">01 — Motion &amp; VFX</p>
+          <p class="project-title">Aston Martin</p>
           <p class="project-tag">Motion &amp; VFX</p>
         </div>
       </div>
@@ -732,8 +777,10 @@
     <div class="project-card" data-category="abstract"
          data-title="Void Fragment" data-tag="Abstract / Generative">
       <div class="placeholder">02</div>
+      <span class="card-label-vertical">Void Fragment</span>
       <div class="project-overlay">
         <div class="project-info">
+          <p class="project-number">02 — Abstract</p>
           <p class="project-title">Void Fragment</p>
           <p class="project-tag">Abstract / Generative</p>
         </div>
@@ -743,8 +790,10 @@
     <div class="project-card" data-category="product"
          data-title="Object 003" data-tag="Product Design">
       <div class="placeholder">03</div>
+      <span class="card-label-vertical">Object 003</span>
       <div class="project-overlay">
         <div class="project-info">
+          <p class="project-number">03 — Product</p>
           <p class="project-title">Object 003</p>
           <p class="project-tag">Product Design</p>
         </div>
@@ -754,8 +803,10 @@
     <div class="project-card" data-category="architecture"
          data-title="Threshold House" data-tag="Architecture">
       <div class="placeholder">04</div>
+      <span class="card-label-vertical">Threshold House</span>
       <div class="project-overlay">
         <div class="project-info">
+          <p class="project-number">04 — Architecture</p>
           <p class="project-title">Threshold House</p>
           <p class="project-tag">Architecture</p>
         </div>
@@ -763,12 +814,13 @@
     </div>
 
     <div class="project-card" data-category="motion" data-type="youtube"
-         data-id="ScMzIvxBSi4"
-         data-title="Particle Study" data-tag="Motion &amp; VFX">
+         data-id="ScMzIvxBSi4" data-title="Particle Study" data-tag="Motion &amp; VFX">
       <div class="placeholder">05</div>
       <span class="media-badge">▶ YouTube</span>
+      <span class="card-label-vertical">Particle Study</span>
       <div class="project-overlay">
         <div class="project-info">
+          <p class="project-number">05 — Motion &amp; VFX</p>
           <p class="project-title">Particle Study</p>
           <p class="project-tag">Motion &amp; VFX</p>
         </div>
@@ -778,8 +830,10 @@
     <div class="project-card" data-category="abstract"
          data-title="Noise Field II" data-tag="Abstract / Generative">
       <div class="placeholder">06</div>
+      <span class="card-label-vertical">Noise Field II</span>
       <div class="project-overlay">
         <div class="project-info">
+          <p class="project-number">06 — Abstract</p>
           <p class="project-title">Noise Field II</p>
           <p class="project-tag">Abstract / Generative</p>
         </div>
@@ -789,6 +843,7 @@
   </div>
 </section>
 
+<!-- ─── ABOUT ──────────────────────────────────────── -->
 <section id="about">
   <div class="section-header reveal">
     <p class="section-label">About</p>
@@ -818,13 +873,14 @@
   </div>
 </section>
 
+<!-- ─── CONTACT ────────────────────────────────────── -->
 <section id="contact">
   <div class="contact-inner">
     <div>
       <p class="section-label reveal">Contact</p>
       <h2 class="contact-cta reveal">Let's work <em>together.</em></h2>
     </div>
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="reveal">
+    <form action="https://formspree.io/f/xgolnool" method="POST" class="reveal">
       <div class="field">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required placeholder="Your name">
@@ -845,11 +901,12 @@
 <footer>
   <p>© 2025 José María Ortega. All rights reserved.</p>
   <div class="footer-links">
-    <a href="https://instagram.com" target="_blank">Instagram</a>
-    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="https://instagram.com/eljosemariaortega" target="_blank">Instagram</a>
+    <a href="https://linkedin.com/joseworks" target="_blank">LinkedIn</a>
   </div>
 </footer>
 
+<!-- ─── LIGHTBOX ────────────────────────────────────── -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose">[ close ]</button>
   <img src="" alt="" id="lightboxImg" style="display:none">
@@ -860,6 +917,7 @@
 </div>
 
 <script>
+  /* ── cursor ── */
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
     cursor.style.left = e.clientX + 'px';
@@ -870,11 +928,13 @@
     el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
   });
 
+  /* ── scroll reveal ── */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: .1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  /* ── video hover play ── */
   document.querySelectorAll('.project-card').forEach(card => {
     const vid = card.querySelector('video.thumb');
     if (!vid) return;
@@ -882,6 +942,7 @@
     card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
   });
 
+  /* ── filter bar ── */
   const filterBtns   = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
 
@@ -891,12 +952,12 @@
       btn.classList.add('active');
       const filter = btn.dataset.filter;
       projectCards.forEach(card => {
-        const show = filter === 'all' || card.dataset.category === filter;
-        card.style.display = show ? '' : 'none';
+        card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
       });
     });
   });
 
+  /* ── lightbox ── */
   const lightbox      = document.getElementById('lightbox');
   const lightboxImg   = document.getElementById('lightboxImg');
   const lightboxVid   = document.getElementById('lightboxVideo');
@@ -904,9 +965,9 @@
   const lightboxInfo  = document.getElementById('lightboxInfo');
 
   function hideAllMedia() {
-    lightboxImg.style.display   = 'none';  lightboxImg.src  = '';
-    lightboxVid.style.display   = 'none';  lightboxVid.pause(); lightboxVid.src = '';
-    lightboxEmbed.style.display = 'none';  lightboxEmbed.src = '';
+    lightboxImg.style.display   = 'none'; lightboxImg.src  = '';
+    lightboxVid.style.display   = 'none'; lightboxVid.pause(); lightboxVid.src = '';
+    lightboxEmbed.style.display = 'none'; lightboxEmbed.src = '';
   }
 
   function embedURL(type, id) {
@@ -921,7 +982,7 @@
       const tag   = card.dataset.tag   || '';
       hideAllMedia();
       if (type === 'youtube' || type === 'vimeo') {
-        lightboxEmbed.src         = embedURL(type, card.dataset.id);
+        lightboxEmbed.src           = embedURL(type, card.dataset.id);
         lightboxEmbed.style.display = '';
       } else if (type === 'video') {
         lightboxVid.src           = card.dataset.src;
@@ -947,9 +1008,9 @@
     document.body.style.overflow = '';
   }
 
-  /* ── YouTube loop fix via IFrame API ── */
+  /* ── YouTube loop fix ── */
   function onYouTubeIframeAPIReady() {
-    const iframe = document.querySelector('.hero-reel iframe[src*="youtube"]');
+    const iframe = document.querySelector('.hero-right iframe[src*="youtube"]');
     if (!iframe) return;
     const videoId = new URL(iframe.src).searchParams.get('playlist');
     if (!videoId) return;
@@ -961,7 +1022,7 @@
       }
     });
   }
-  if (document.querySelector('.hero-reel iframe[src*="youtube"]')) {
+  if (document.querySelector('.hero-right iframe[src*="youtube"]')) {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.head.appendChild(tag);
