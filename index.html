@@ -983,7 +983,7 @@
       hideAllMedia();
       if (type === 'youtube' || type === 'vimeo') {
         lightboxEmbed.src           = embedURL(type, card.dataset.id);
-        lightboxEmbed.style.display = '';
+        lightboxEmbed.style.display = 'block';
       } else if (type === 'video') {
         lightboxVid.src           = card.dataset.src;
         lightboxVid.style.display = '';
