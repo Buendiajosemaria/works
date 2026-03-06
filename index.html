@@ -107,8 +107,9 @@
     .ig-cell-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .45rem; padding: .5rem; z-index: 2; transition: transform .35s var(--ease); }
     .ig-cell:hover .ig-cell-inner { transform: translateY(-3px); }
     /* CHANGED: brand logo */
-    .ig-logo { width: 38px; height: 38px; object-fit: contain; opacity: .45; transition: opacity .3s var(--ease); flex-shrink: 0; filter: brightness(0) invert(1); }
-    .ig-cell:hover .ig-logo { opacity: 1; }
+    .ig-logo { width: 72px; height: 52px; object-fit: contain; opacity: .55; transition: opacity .3s var(--ease); flex-shrink: 0; mix-blend-mode: screen; }
+    .ig-logo-invert { filter: invert(1); mix-blend-mode: normal; }
+    .ig-logo-wide { width: 90px; height: 64px; }    .ig-cell:hover .ig-logo { opacity: 1; }
     .ig-icon { width: 18px; height: 18px; opacity: .35; transition: opacity .3s var(--ease); flex-shrink: 0; }
     .ig-cell:hover .ig-icon { opacity: .7; }
     .ig-brand-name { font-family: var(--sans); font-size: clamp(.45rem, 1vw, .65rem); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.55); text-align: center; line-height: 1.2; transition: color .3s var(--ease); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
@@ -293,7 +294,7 @@
         <!-- Brand 1 — Quadriccio -->
         <a class="ig-cell" href="https://www.instagram.com/quadriccio/" target="_blank" rel="noopener">
           <div class="ig-cell-inner">
-            <img class="ig-logo" src="logos/quadriccio.png" alt="Quadriccio"
+                <img class="ig-logo ig-logo-invert" src="logos/quadriccio.png" alt="Quadriccio"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <svg class="ig-icon" style="display:none" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
             <span class="ig-brand-name">QUADRICCIO</span>
@@ -326,7 +327,7 @@
         <!-- Brand 4 — Waykana -->
         <a class="ig-cell" href="https://www.instagram.com/waykana.ecuador/" target="_blank" rel="noopener">
           <div class="ig-cell-inner">
-            <img class="ig-logo" src="logos/waykana.png" alt="Waykana"
+            <img class="ig-logo ig-logo-wide" src="logos/waykana.png" alt="Waykana"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <svg class="ig-icon" style="display:none" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
             <span class="ig-brand-name">Waykana</span>
