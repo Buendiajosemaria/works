@@ -30,6 +30,27 @@
     .hero-eyebrow { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent1); font-weight: 600; margin-bottom: 1.75rem; opacity: 0; transform: translateY(10px); animation: fadeUp .7s var(--ease) .2s forwards; }
     .hero-title { font-family: var(--sans); font-size: clamp(2.8rem, 5.5vw, 5.5rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) .4s forwards; }
     .hero-title .line-accent { color: var(--accent1); }
+    .title-slide-inner {
+      display: block;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1);
+      pointer-events: none;
+      height: 0;
+      overflow: visible;
+      white-space: nowrap;
+    }
+  .title-slide-inner.active {
+  opacity: 1;
+  transform: translateY(0);
+  height: auto;
+  pointer-events: auto;
+}
+.title-slide-inner.exit {
+  opacity: 0;
+  transform: translateY(-22px);
+  height: 0;
+}
     .hero-cta { display: inline-flex; align-items: center; gap: .6rem; margin-top: 2.5rem; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--ink); text-decoration: none; opacity: 0; animation: fadeUp .8s var(--ease) .9s forwards; transition: color .25s; }
     .hero-cta::after { content: '→'; font-size: 1rem; transition: transform .3s var(--ease); }
     .hero-cta:hover { color: var(--accent1); }
@@ -179,7 +200,7 @@
 <section id="hero">
   <div class="hero-left">
     <p class="hero-eyebrow">3D Design &amp; Visual Development</p>
-    <h1 class="hero-title">Intention<br><span class="line-accent">creates</span><br>presence.</h1>
+    <h1 class="hero-title" id="heroTitle">   <span class="title-slide-inner active" id="hs0">Intention<br><span class="line-accent">creates</span><br>presence.</span>   <span class="title-slide-inner" id="hs1">Converting ideas<br>to <span class="line-accent">images.</span></span>   <span class="title-slide-inner" id="hs2">Working<br><span class="line-accent">internationally.</span></span> </h1>
     <a href="#work" class="hero-cta">View selected work</a>
   </div>
   <div class="scroll-hint">
@@ -504,6 +525,17 @@
     tag.src = 'https://www.youtube.com/iframe_api';
     document.head.appendChild(tag);
   }
+  (function() {
+  const slides = document.querySelectorAll('.title-slide-inner');
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    setTimeout(() => slides[cur].classList.remove('exit'), 600);
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 3200);
+})();
 </script>
 </body>
 </html>
