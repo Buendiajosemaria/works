@@ -28,7 +28,7 @@
     #hero { display: grid; grid-template-columns: 1fr 60%; height: calc(60vw * (9/16) + 4.5rem); padding-top: 4.5rem; position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
     .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 2rem 2rem 2rem calc(var(--gap) + 1.5rem); z-index: 2; overflow: hidden; }
     .hero-eyebrow { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent1); font-weight: 600; margin-bottom: 1.75rem; opacity: 0; transform: translateY(10px); animation: fadeUp .7s var(--ease) .2s forwards; }
-    .hero-title { font-family: var(--sans); font-size: clamp(2.8rem, 5.5vw, 5.5rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) .4s forwards; }
+    .hero-title { font-family: var(--sans); font-size: clamp(2.8rem, 5.5vw, 5.5rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) .4s forwards; overflow: hidden; word-break: break-word;}
     .hero-title .line-accent { color: var(--accent1); }
     .title-slide-inner {
       display: block;
