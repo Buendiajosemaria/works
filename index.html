@@ -29,8 +29,8 @@
     .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 2rem 2rem 2rem calc(var(--gap) + 1.5rem); z-index: 2; overflow: hidden; }
     .hero-eyebrow { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent1); font-weight: 600; margin-bottom: 1.75rem; opacity: 0; transform: translateY(10px); animation: fadeUp .7s var(--ease) .2s forwards; }
     .hero-title { font-family: var(--sans); font-weight: 900; line-height: 1; letter-spacing: -.03em; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) .4s forwards; }
-    .title-slide-inner { display: none; }
-    .title-slide-inner.active { display: block; }
+    .title-slide-inner { display: none; opacity: 0; transition: opacity .5s var(--ease); }
+    .title-slide-inner.active { display: block; opacity: 1; }
     .hero-title .line-accent { color: var(--accent1); }
     .hero-cta { display: inline-flex; align-items: center; gap: .6rem; margin-top: 2.5rem; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--ink); text-decoration: none; opacity: 0; animation: fadeUp .8s var(--ease) .9s forwards; transition: color .25s; }
     .hero-cta::after { content: '→'; font-size: 1rem; transition: transform .3s var(--ease); }
@@ -54,6 +54,10 @@
     .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: clamp(2rem, 5vw, 3.5rem); flex-wrap: wrap; gap: 1rem; }
     .section-label { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent1); font-weight: 600; }
     .section-title { font-family: var(--sans); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1; letter-spacing: -.01em; }
+    .clients-grid { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 3rem clamp(2rem, 6vw, 5rem); padding: 1rem 0; }
+    .client-logo-wrap { display: flex; align-items: center; justify-content: center; opacity: .45; transition: opacity .3s var(--ease), filter .3s var(--ease); filter: grayscale(1); }
+    .client-logo-wrap:hover { opacity: 1; filter: grayscale(0); }
+    .client-logo-wrap img { height: 36px; width: auto; max-width: 140px; object-fit: contain; display: block; }
     .filter-bar { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
     .filter-btn { font-family: var(--sans); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; padding: .45rem 1.1rem; border: 2px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; border-radius: 2rem; transition: all .25s var(--ease); }
     .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
@@ -376,6 +380,33 @@
     </div>
 
   </div>
+  <section id="clients">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-label">Selected Clients</p>
+      <h2 class="section-title">Clients</h2>
+    </div>
+  </div>
+  <div class="clients-grid reveal">
+    <div class="client-logo-wrap">
+      <img src="logos/KaraSolarLogo.png" alt="Kara Solar">
+    </div>
+    <div class="client-logo-wrap">
+      <img src="logos/Meta-Logo.png" alt="Meta">
+    </div>
+    <div class="client-logo-wrap">
+      <img src="logos/Netflix_Logomark.png" alt="Netflix">
+    </div>
+    <div class="client-logo-wrap">
+      <img src="logos/OpenAILogo.png" alt="OpenAI">
+    </div>
+    <div class="client-logo-wrap">
+      <img src="logos/SharkNinjaLogo.png" alt="SharkNinja">
+    </div>
+    <div class="client-logo-wrap">
+      <img src="logos/XAI_Logo.png" alt="xAI">
+    </div>
+  </div>
 </section>
 
 <section id="about">
@@ -513,10 +544,16 @@
   let cur = 0;
   title.style.fontSize = sizes[0];
   setInterval(() => {
-    slides[cur].classList.remove('active');
-    cur = (cur + 1) % slides.length;
-    title.style.fontSize = sizes[cur];
-    slides[cur].classList.add('active');
+    slides[cur].style.opacity = '0';
+    setTimeout(() => {
+      slides[cur].style.display = 'none';
+      cur = (cur + 1) % slides.length;
+      title.style.fontSize = sizes[cur];
+      slides[cur].style.display = 'block';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        slides[cur].style.opacity = '1';
+      }));
+    }, 500);
   }, 3200);
 })();
 </script>
