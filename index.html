@@ -54,6 +54,44 @@
     .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: clamp(2rem, 5vw, 3.5rem); flex-wrap: wrap; gap: 1rem; }
     .section-label { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent1); font-weight: 600; }
     .section-title { font-family: var(--sans); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1; letter-spacing: -.01em; }
+    .client-role {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent1);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+    .client-logo-wrap {
+  position: relative;
+  padding-bottom: 25px; /* Make room for the role text */
+}
+
+.client-logo-wrap:hover .client-role {
+  opacity: 1;
+}
+.client-logo-wrap[data-work]:hover::after {
+  content: attr(data-work);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.95;
+}
     .clients-grid { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 3rem clamp(2rem, 6vw, 5rem); padding: 1rem 0; }
     .client-logo-wrap { display: flex; align-items: center; justify-content: center; opacity: .65; transition: opacity .3s var(--ease), filter .3s var(--ease); filter: grayscale(1) contrast(0.8); }
     .client-logo-wrap:hover { opacity: 1; filter: grayscale(0) contrast(1); }
@@ -63,7 +101,7 @@
     .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
     .filter-btn.active { background: var(--accent1); color: #fff; border-color: var(--accent1); }
     .project-grid { display: flex; gap: 3px; height: 520px; align-items: stretch; }
-    .project-card { position: relative; overflow: hidden; background: var(--surface); cursor: pointer; border-radius: 2px; flex: 1; min-width: 60px; transition: flex .6s var(--ease), filter .4s; filter: saturate(.7) brightness(.9); }
+    .project-card { position: relative; overflow: hidden; background: #1a1512; cursor: pointer; border-radius: 2px; flex: 1; min-width: 60px; transition: flex .6s var(--ease), filter .4s; filter: saturate(.7) brightness(.9); }
     .project-card:hover { flex: 4.5; filter: saturate(1.05) brightness(1); }
     .project-card:first-child { flex: 1.6; }
     .project-card .thumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
@@ -84,7 +122,7 @@
     .project-number { font-family: var(--mono); font-size: .6rem; color: var(--accent1); letter-spacing: .12em; margin-bottom: .35rem; }
     .project-title { font-family: var(--sans); font-size: 1.25rem; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .project-tag { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: rgba(255,255,255,.5); margin-top: .25rem; }
-    .card-label-vertical { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl; font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 600; color: rgba(255,255,255,.3); white-space: nowrap; transition: opacity .35s var(--ease); pointer-events: none; }
+    .card-label-vertical { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl; font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 600; color: rgba(255,255,255,.75); white-space: nowrap; transition: opacity .35s var(--ease); pointer-events: none; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
     .project-card:hover .card-label-vertical { opacity: 0; }
     .project-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--accent1); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); }
     .project-card:hover::after { transform: scaleX(1); }
@@ -369,12 +407,12 @@
     <div class="project-card" data-category="motion" data-type="vimeo" data-id="1167886315" data-title="Aston Martin" data-tag="Motion &amp; VFX">
       <iframe src="https://player.vimeo.com/video/1167886315?autoplay=1&muted=1&loop=1&background=1" style="position:absolute;top:50%;left:50%;width:177.78%;height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none;" allow="autoplay; fullscreen" title="Aston Martin"></iframe>
       <span class="media-badge">▶ Vimeo</span>
-      <span class="card-label-vertical">Aston Martin</span>
+      <span class="card-label-vertical">Fluid Simulation</span>
       <div class="project-overlay">
         <div class="project-info">
           <p class="project-number">01 — Motion &amp; VFX</p>
           <p class="project-title">Aston Martin</p>
-          <p class="project-tag">An exploration of aerodynamics, fluid simulation, textures, and lighting packed in an homage to motorsport. FLUID SIMULATION, RIGGING, TEXTURING, LIGHTING, SEQUENCING, RENDERING, MOTION GRAPHICS.</p>
+          <p class="project-tag">Personal project; 30s motorsport homage exploring aerodynamics through fluid simulation. 644k poly vehicle model fully rigged and animated across Embergen and Blender. Rendered at 3840x2160 in Blender Cycles. Full pipeline: rigging → fluid sim → texturing → lighting → rendering → post production</p>
         </div>
       </div>
     </div>
@@ -388,7 +426,7 @@
         <div class="project-info">
           <p class="project-number">02 — Architecture</p>
           <p class="project-title">XO Archviz</p>
-          <p class="project-tag">XO ARCHVIZ is a boutique Architectural Visualization Studio based in Quito, Ecuador co-founded by me. This small studio fostered the development of shared commercial/residential spaces throughout Ecuador from 2023 to 2024. 3D MODELING, TEXTURING, LIGHTING, SEQUENCING, UE BLUEPRINTS, RENDERING</p>
+          <p class="project-tag"> Co-founded boutique archviz studio in Quito, Ecuador (2023–2024). Converted CAD data into a detailed 5-story mixed-use building. 23 interior spaces, 6 exterior angles. 42 final deliverables across 3 client projects. Pipeline: CAD → Houdini → UE5 Blueprints → final render.</p>
         </div>
       </div>
     </div>
@@ -397,12 +435,12 @@
     <div class="project-card" data-category="abstract" data-type="vimeo" data-id="939834458" data-title="AUDITIVA_VISUALIZER" data-tag="Abstract / Generative">
       <iframe src="https://player.vimeo.com/video/939834458?autoplay=1&muted=1&loop=1&background=1" style="position:absolute;top:50%;left:50%;width:177.78%;height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none;" allow="autoplay; fullscreen" title="AUDITIVA_VISUALIZER"></iframe>
       <span class="media-badge">▶ Vimeo</span>
-      <span class="card-label-vertical">GENERATIVE_AUDIO_VISUALIZER</span>
+      <span class="card-label-vertical">Generative Audio Visualizer</span>
       <div class="project-overlay">
         <div class="project-info">
           <p class="project-number">03 — Generative</p>
           <p class="project-title">AUDITIVA_AUDIO_VISUALIZER</p>
-          <p class="project-tag">A combination of procedural motion graphics generation systems driving 3D animation from music. TOUCHDESIGNER NODE FLOW, INTERACTIVE AUDIO VISUALIZATION, 3D MODELING, TEXTURING, UE5 BLUEPRINTS, PROCEDURAL UV DISPLACEMENT</p>
+          <p class="project-tag">Real-time generative system translating 48kHz audio into procedural 3D animation at 60fps. Built with a 100+node TouchDesigner flow driving UV displacement in UE5. Pipeline: TouchDesigner → UE5 Blueprints → procedural UV displacement → real-time render</p>
         </div>
       </div>
     </div>
@@ -416,7 +454,7 @@
         <div class="project-info">
           <p class="project-number">04 — Product Visualization</p>
           <p class="project-title">ANDREA LOUNGE CHAIR</p>
-          <p class="project-tag">Product Visualization recreating and showcasing the Andrea Lounge Chair designed by Swedish trio Claesson Koivisto Rune. SEQUENCING, TEXTURING, HAIR SIMULATION, LIGHTING, RENDERING </p>
+          <p class="project-tag">Recreation of the Andrea Lounge Chair by Claesson Koivisto Rune. 4 sequences across 6 camera angles. Hair simulation with 50K+ strands for fabric detail. Rendered at 3840x2160 in Blender Cycles. Turnaround: 2 weeks </p>
         </div>
       </div>
     </div>
@@ -501,7 +539,7 @@
 
 
   </div>
-  <section id="clients">
+<section id="clients">
   <div class="section-header reveal">
     <div>
       <p class="section-label">Selected Clients</p>
@@ -509,36 +547,51 @@
     </div>
   </div>
   <div class="clients-grid reveal">
-    <div class="client-logo-wrap">
+    
+    <div class="client-logo-wrap" data-work="3D product visualization, technical animation, solar energy communication campaign for foundation personnel and indigenous communities across Latin America and Oceania">
       <img src="KaraSolarLogo.png" alt="Kara Solar">
+      <span class="client-role">3D Design, Post Production</span>
     </div>
-    <div class="client-logo-wrap">
+    
+    <div class="client-logo-wrap" data-work="AI training data generation, rubrics-based character adherence LLM evaluations, i18n RLHF — via Outlier">
       <img src="Meta-Logo.png" alt="Meta">
+      <span class="client-role">AI Training & RLHF via Outlier</span>
     </div>
-    <div class="client-logo-wrap">
+    
+    <div class="client-logo-wrap" data-work="Multilingual AI evaluation, convolutional model quality assessment & comparison, multimedia full-length film scene labeling RLHF — via Alignerr">
       <img src="Netflix_Logomark.png" alt="Netflix">
+      <span class="client-role">AI Evaluation via Alignerr</span>
     </div>
-    <div class="client-logo-wrap">
+    
+    <div class="client-logo-wrap" data-work="Multimodal AI evaluation, visual reasoning tasks, prompt-response ranking — via Outlier">
       <img src="OpenAILogo.png" alt="OpenAI">
+      <span class="client-role">Multimodal AI Evaluation via Outlier</span>
     </div>
-    <div class="client-logo-wrap">
+    
+    <div class="client-logo-wrap" data-work="3D Fluid Simulation for home appliances, 3D asset creation">
       <img src="SharkNinjaLogo.png" alt="SharkNinja">
+      <span class="client-role">3D Design</span>
     </div>
-    <div class="client-logo-wrap">
+    
+    <div class="client-logo-wrap" data-work="Voice data generation, script evaluation — via Outlier">
       <img src="XAI_Logo.png" alt="xAI">
+      <span class="client-role">AI Voice Data Generation via Outlier</span>
     </div>
+    
   </div>
-</section>
-
 <section id="about">
   <div class="section-header reveal"><p class="section-label">About</p></div>
   <div class="about-grid">
-  <p class="about-lead reveal">Exploring ways through which <span>consciousness</span> can express itself into images.</p>
-  <div class="about-photo reveal">
-    <img src="your-photo.jpg" alt="José María Ortega">
-  </div>
-  <div class="about-bio reveal">
-      <p>I'm José, a 3D Designer, Post Producer and AI training specialist with a passion for videogames, photography, visual composition, audio work, and all things media. I'm currently available for contract work, creative collaborations, art direction, and consultations. Feel free to reach out.</p>
+    <p class="about-lead reveal">DAAD scholar turning <span>fluid simulations</span>, motion capture pipelines, and AI training into work that ships <span>internationally.</span></p>
+    <div class="about-photo reveal">
+      <img src="your-photo.jpg" alt="José María Ortega">
+    </div>
+    <div class="about-bio reveal">
+      <p>I'm José — a 3D Designer, Post Production Director, and AI training specialist currently based in Nürnberg, Germany, pursuing a Master's in Design for Digital Futures on a DAAD scholarship at TH Georg Simon Ohm.</p>
+      <p style="margin-top:.75rem;">Before moving to Germany, I spent five years building across Ecuador's creative industry, engineering an inertial motion capture pipeline at Imán Transmedia that helped win the Taicca Innovative Content Grant, co-founding a small boutique architectural visualization studio, XO Archviz, to deliver architectural walkthroughs for commercial developments, and directing post-production at WINGMAN for brands like DANEC. I've also produced 3D visualizations for solar energy campaigns reaching indigenous communities across Latin America and Oceania through Kara Solar.</p>
+      <p style="margin-top:.75rem;">Today I produce fluid simulations and 3D assets for Brick Design SF while contracting as an AI Data Analyst. I evaluate multimodal outputs, annotate full-length film sequences, and generate RLHF training data for models deployed by Meta, Netflix, OpenAI, and xAI through Outlier and Alignerr.</p>
+      <p style="margin-top:.75rem;">Trilingual. Cambridge-certified English, native Spanish, B2 German. Available for contract work, creative collaboration, and art direction worldwide.</p>
+      <p style="margin-top:.75rem;">I absolutely love videogames and all things media, as well as bringing creative visions to life. Shoot me a message if you want to get in touch.</p>
     </div>
     <div class="skills-list reveal">
       <div class="skill-row">Blender</div>
@@ -549,6 +602,10 @@
       <div class="skill-row">Figma</div>
       <div class="skill-row">Premiere Pro</div>
       <div class="skill-row">Photoshop</div>
+      <div class="skill-row">TouchDesigner</div>
+      <div class="skill-row">Motion Capture</div>
+      <div class="skill-row">Fluid Simulation</div>
+      <div class="skill-row">RLHF & AI Evaluation</div>
     </div>
   </div>
 </section>
